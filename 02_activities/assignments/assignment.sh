@@ -18,6 +18,7 @@ cd newproject
 
 mkdir analysis output
 touch README.md
+echo "# Project Name: DSI Consulting Inc." > README.md
 touch analysis/main.py
 
 # download client data
@@ -26,6 +27,31 @@ unzip -q rawdata.zip
 
 ###########################################
 # Complete assignment here
+# 1. Create a directory named data
+mkdir data
+
+# 2. Move the ./rawdata directory to ./data/raw
+mv rawdata data/raw
+
+# 3. List the contents of the ./data/raw directory
+ls data/raw
+
+# 4. Create the directory ./data/processed and subdirectories
+mkdir -p data/processed/server_logs data/processed/user_logs data/processed/event_logs
+
+# 5. Copy all server log files to server_logs
+cp data/raw/*server*.log data/processed/server_logs 2>/dev/null
+
+# 6. Copy user logs and event logs
+cp data/raw/*user*.log data/processed/user_logs 2>/dev/null
+cp data/raw/*event*.log data/processed/event_logs 2>/dev/null
+
+# 7. Remove files containing IP addresses
+rm -f data/processed/user_logs/*ipaddr*
+
+# 8. Create inventory.txt listing all files in processed subfolders
+find data/processed -type f > data/inventory.txt
+
 
 # 1. Create a directory named data
 
@@ -36,11 +62,16 @@ unzip -q rawdata.zip
 # 4. Create the directory ./data/processed, 
 #    then create the following sub-directories within it: server_logs, user_logs, and event_logs
 
-# 5. Copy all server log files (files with "server" in the name AND a .log extension) from ./data/raw to ./data/processed/server_logs
+# 5. Copy all server log files
+cp data/raw/*server*.log data/processed/server_logs 2>/dev/null
 
-# 6. Repeat the above step for user logs and event logs
+# 6. Copy user logs and event logs
+cp data/raw/*user*.log data/processed/user_logs 2>/dev/null
+cp data/raw/*event*.log data/processed/event_logs 2>/dev/null
 
-# 7. For user privacy, remove all files containing IP addresses (files with "ipaddr" in the filename) from ./data/raw and ./data/processed/user_logs
+# 7. Remove files containing IP addresses
+rm -f data/raw/*ipaddr*
+rm -f data/processed/user_logs/*ipaddr*
 
 # 8. Create a file named ./data/inventory.txt that lists all the files in the subfolders of ./data/processed
 
